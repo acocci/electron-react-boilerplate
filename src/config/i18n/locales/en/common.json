@@ -1,0 +1,100 @@
+{
+  "about": {
+    "back": "Back to Home",
+    "title": "About Page"
+  },
+  "activeDevices": {
+    "title": "Active Devices"
+  },
+  "application": {
+    "title": "CHP-IDA Ingestion Management System Command Center (IMSCC)"
+  },
+  "buttons": {
+    "connect": "Connect",
+    "connected": "connected",
+    "disconnect": "Disconnect",
+    "disconnected": "disconnected",
+    "reload": "Reload",
+    "remove": "Remove",
+    "toggleDisplay": "Toggle Display"
+  },
+  "catalog": {
+    "title": "Catalog"
+  },
+  "charts": {
+    "areaChart": "Area Chart",
+    "barChart": "Bar Chart",
+    "charts": "Charts",
+    "lineChart": "Line Chart",
+    "pieChart": "Pie Chart"
+  },
+  "dashboard": {
+    "controls": {
+      "lock": "Lock current layout",
+      "reset": "Reset layout to last saved version",
+      "save": "Save current layout",
+      "unlock": "Unlock to edit layout"
+    }
+  },
+  "devices": {
+    "address": "Address",
+    "agentId": "Agent ID",
+    "autoCompleteLabel": "Filter by Device",
+    "bluetoothStrength": "Bluetooth Strength",
+    "characteristics": "Characteristics",
+    "clickToForget": "Click to forget device",
+    "connect": "Connect",
+    "connectedState": "Connected State",
+    "connection": "Connection",
+    "device": "Device",
+    "deviceAdddress": "Device Address",
+    "deviceId": "Device ID",
+    "deviceName": "Device Name",
+    "disconnect": "Disconnect",
+    "disconnectedMsg": " > {{seconds}} seconds",
+    "disconnecting": "Disconnecting",
+    "error": "Error",
+    "lastMsgRecieved": "Last Message Recieved",
+    "lastRecieved": "Last Recieved",
+    "lastSent": "Last Sent",
+    "listofAvailable": "List of Available Devices",
+    "listofSelected": "List of Selected Devices",
+    "messagesReceived": "Messages Recieved",
+    "messagesSent": "Messages Sent",
+    "na": "N/A",
+    "none": "None",
+    "searchForAgents": "Searching for Agents",
+    "searchForDevices": "Searching for Devices",
+    "signalStrength": "Signal Strength",
+    "status": "Status",
+    "title": "Devices",
+    "willTimeout": "will timeout in {{counter}} seconds"
+  },
+  "home": {
+    "buttons": {
+      "delete": "Delete",
+      "reset": "Reset",
+      "submit": "Add new Post",
+      "update": "Update"
+    },
+    "form": {
+      "body": "body",
+      "title": "title",
+      "validation": {
+        "body-required": "body can't be empty",
+        "title-max": "title must not exceed {{num}} characters",
+        "title-required": "title can't be empty"
+      }
+    }
+  },
+  "navigation": {
+    "links": {
+      "about": "About",
+      "activeDevices": "Active Devices",
+      "catalog": "Catalog",
+      "devices": "Devices",
+      "home": "Home",
+      "tokenTest": "Token Test"
+    }
+  }
+}

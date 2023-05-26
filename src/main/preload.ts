@@ -22,6 +22,26 @@ const electronHandler = {
       ipcRenderer.once(channel, (_event, ...args) => func(...args));
     },
   },
+  Env: {
+    apiBase() {
+      return process.env.API_BASE_URL;
+    },
+    isDev() {
+      return process.env.NODE_ENV === 'development';
+    },
+    isMinimized() {
+      return process.env.START_MINIMIZED;
+    },
+    isMswEnabled() {
+      return process.env.MSW_ENABLED;
+    },
+    isProd() {
+      return process.env.NODE_ENV === 'production';
+    },
+    isTest() {
+      return process.env.NODE_ENV === 'test';
+    },
+  },
 };
 
 contextBridge.exposeInMainWorld('electron', electronHandler);

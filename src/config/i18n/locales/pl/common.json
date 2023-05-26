@@ -1,0 +1,100 @@
+{
+  "about": {
+    "back": "Powrót do Strony Domowej",
+    "title": "O Nas"
+  },
+  "activeDevices": {
+    "title": "Aktywne urządzenia"
+  },
+  "application": {
+    "title": "CHP-IDA Ingestion Management System Command Center (IMSCC)"
+  },
+  "buttons": {
+    "connect": "Łączyć",
+    "connected": "połączony",
+    "disconnect": "Rozłączyć się",
+    "disconnected": "bezładny",
+    "reload": "Przeładować",
+    "remove": "Usunąć",
+    "toggleDisplay": "Przełącz wyświetlanie"
+  },
+  "catalog": {
+    "title": "Katalog"
+  },
+  "charts": {
+    "areaChart": "Wykres warstwowy",
+    "barChart": "Wykres słupkowy",
+    "charts": "Wykresy",
+    "lineChart": "Wykres liniowy",
+    "pieChart": "Wykres kołowy"
+  },
+  "dashboard": {
+    "controls": {
+      "lock": "Zablokuj bieżący układ",
+      "reset": "Zresetuj układ do ostatnio zapisanej wersji",
+      "save": "Zapisz bieżący układ",
+      "unlock": "Odblokuj, aby edytować układ"
+    }
+  },
+  "devices": {
+    "address": "Adres",
+    "agentId": "Identyfikator agenta",
+    "autoCompleteLabel": "Filtruj według urządzenia",
+    "bluetoothStrength": "Siła Bluetootha",
+    "characteristics": "Charakterystyka",
+    "clickToForget": "Kliknij, aby zapomnieć o urządzeniu",
+    "connect": "Łączyć",
+    "connectedState": "Stan połączenia",
+    "connection": "Połączenie",
+    "device": "Urządzenie",
+    "deviceAdddress": "Adres urządzenia",
+    "deviceId": "Identyfikator urzadzenia",
+    "deviceName": "Nazwa urządzenia",
+    "disconnect": "Rozłączyć się",
+    "disconnectedMsg": " > {{seconds}} sekund",
+    "disconnecting": "Rozłączanie",
+    "error": "Błąd",
+    "lastMsgRecieved": "Otrzymano ostatnią wiadomość",
+    "lastRecieved": "Ostatnio otrzymane",
+    "lastSent": "Ostatnio wysłane",
+    "listofAvailable": "Lista dostępnych urządzeń",
+    "listofSelected": "Lista wybranych urządzeń",
+    "messagesReceived": "Otrzymane wiadomości",
+    "messagesSent": "Wiadomości wysłane",
+    "na": "Nie dotyczy",
+    "none": "Nic",
+    "searchForAgents": "Wyszukiwanie agentów",
+    "searchForDevices": "Wyszukiwanie urządzeń",
+    "signalStrength": "Siła sygnału",
+    "status": "Status",
+    "title": "Urządzenia",
+    "willTimeout": "przekroczy limit czasu za {{counter}} sekund"
+  },
+  "home": {
+    "buttons": {
+      "delete": "Usuń",
+      "reset": "Resetuj",
+      "submit": "Dodaj nowy Post",
+      "update": "Edytuj"
+    },
+    "form": {
+      "body": "treść",
+      "title": "tytuł",
+      "validation": {
+        "body-required": "treść nie może być pusta",
+        "title-max": "tytuł nie może przekroczyć {{num}} znaków",
+        "title-required": "tytuł nie może być pusty"
+      }
+    }
+  },
+  "navigation": {
+    "links": {
+      "about": "O Nas",
+      "activeDevices": "Aktywne urządzenia",
+      "catalog": "Katalog",
+      "devices": "Urządzenia",
+      "home": "Strona Domowa",
+      "tokenTest": "Test tokena"
+    }
+  }
+}

@@ -1,50 +1,32 @@
-import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
-import icon from '../../assets/icon.svg';
+import { ThemeProvider } from '@mui/material/styles';
+import { SnackbarProvider } from 'notistack';
+import { I18nextProvider } from 'react-i18next';
+import { Provider } from 'react-redux';
+import { HashRouter as Router } from 'react-router-dom';
+
+import i18n from 'config/i18n';
+import { ConnectionProvider } from 'context/ConnectionContext';
+import AppRoutes from 'routes';
+import { store } from 'store/store';
+import theme from 'theme';
 import './App.css';
 
-function Hello() {
+function App() {
   return (
-    <div>
-      <div className="Hello">
-        <img width="200" alt="icon" src={icon} />
-      </div>
-      <h1>electron-react-boilerplate</h1>
-      <div className="Hello">
-        <a
-          href="https://electron-react-boilerplate.js.org/"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <button type="button">
-            <span role="img" aria-label="books">
-              📚
-            </span>
-            Read our docs
-          </button>
-        </a>
-        <a
-          href="https://github.com/sponsors/electron-react-boilerplate"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <button type="button">
-            <span role="img" aria-label="folded hands">
-              🙏
-            </span>
-            Donate
-          </button>
-        </a>
-      </div>
-    </div>
+    <ThemeProvider theme={theme}>
+      <Provider store={store}>
+        <I18nextProvider i18n={i18n}>
+          <ConnectionProvider>
+            <SnackbarProvider maxSnack={3}>
+              <Router>
+                <AppRoutes />
+              </Router>
+            </SnackbarProvider>
+          </ConnectionProvider>
+        </I18nextProvider>
+      </Provider>
+    </ThemeProvider>
   );
 }
 
-export default function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Hello />} />
-      </Routes>
-    </Router>
-  );
-}
+export default App;
