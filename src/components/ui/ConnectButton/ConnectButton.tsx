@@ -5,10 +5,10 @@ import { useSnackbar } from 'notistack';
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { ConnectionContext } from 'context/ConnectionContext';
-import { ConnectState } from 'helpers/devices';
-import { AgentCMD } from 'libs/interface/api/connection';
-import { useAppSelector } from 'store/hooks';
+import { ConnectionContext } from '../../../context/ConnectionContext';
+import { ConnectState } from '../../../helpers/devices';
+import { AgentCMD } from '../../../libs/interface/api/connection';
+import { useAppSelector } from '../../../store/hooks';
 
 import {
   Severity,

@@ -2,6 +2,9 @@
 logs
 *.log
 
+# storybook
+/storybook-static
+
 # Runtime data
 pids
 *.pid

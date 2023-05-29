@@ -1,7 +1,7 @@
 import { AppBar } from '@mui/material';
 import { styled } from '@mui/system';
 
-import { sansSerifFontFamily } from 'theme';
+import { sansSerifFontFamily } from '../../theme';
 
 export const StyledAppBar = styled(AppBar)(({ theme }) => ({
   '& h1': {

@@ -7,16 +7,22 @@ import {
   SpanStatusCode,
   trace,
 } from '@opentelemetry/api';
-import { createContextKey, ROOT_CONTEXT } from '@opentelemetry/api/build/src/context/context';
+import {
+  createContextKey,
+  ROOT_CONTEXT,
+} from '@opentelemetry/api/build/src/context/context';
 import { W3CTraceContextPropagator } from '@opentelemetry/core';
 import { ZipkinExporter } from '@opentelemetry/exporter-zipkin';
 import { Resource } from '@opentelemetry/resources';
-import { BasicTracerProvider, BatchSpanProcessor } from '@opentelemetry/sdk-trace-base';
+import {
+  BasicTracerProvider,
+  BatchSpanProcessor,
+} from '@opentelemetry/sdk-trace-base';
 import { StackContextManager } from '@opentelemetry/sdk-trace-web';
 /* eslint-disable no-underscore-dangle */
 import { v4 as uuidv4 } from 'uuid';
 
-import { LevelString, log } from 'helpers/logger';
+import { LevelString, log } from '../../../helpers/logger';
 
 import { BrokerConnection, BrokerConnectionInfo } from './broker-connection';
 import { MessageHandler } from './message-handlers';
@@ -24,7 +30,9 @@ import { MessageHandler } from './message-handlers';
 // Create and register an SDK
 // for usage, see https://github.com/open-telemetry/opentelemetry-js/blob/main/doc/tracing.md
 propagation.setGlobalPropagator(new W3CTraceContextPropagator());
-const provider = new BasicTracerProvider({ resource: new Resource({ 'service.name': 'IMSCC' }) });
+const provider = new BasicTracerProvider({
+  resource: new Resource({ 'service.name': 'IMSCC' }),
+});
 const contextManager = new StackContextManager();
 contextManager.enable();
 if (!context.setGlobalContextManager(contextManager))
@@ -83,7 +91,7 @@ export class ApiConnection extends BrokerConnection {
     info: BrokerConnectionInfo,
     statusMessageHandler: MessageHandler,
     dataCatalogMessageHandler: MessageHandler,
-    topic: string | string[] = ['chpida.ims.datacatalog', 'chpida.ims.status'],
+    topic: string | string[] = ['chpida.ims.datacatalog', 'chpida.ims.status']
   ) {
     super(info, topic);
     this._statusHandler = statusMessageHandler;
@@ -95,11 +103,16 @@ export class ApiConnection extends BrokerConnection {
     info: BrokerConnectionInfo,
     statusMessageHandler: MessageHandler,
     dataCatalogMessageHandler: MessageHandler,
-    topic: string | string[] = ['chpida.ims.datacatalog', 'chpida.ims.status'],
+    topic: string | string[] = ['chpida.ims.datacatalog', 'chpida.ims.status']
   ) {
     // Do you need arguments? Make it a regular static method instead.
     if (this._instance) return this._instance;
-    this._instance = new this(info, statusMessageHandler, dataCatalogMessageHandler, topic);
+    this._instance = new this(
+      info,
+      statusMessageHandler,
+      dataCatalogMessageHandler,
+      topic
+    );
     return this._instance;
   }
 
@@ -108,7 +121,7 @@ export class ApiConnection extends BrokerConnection {
     cmd: AgentCMD,
     agentid: string,
     params: Record<string, unknown>,
-    messageHandler: null | MessageHandler = null,
+    messageHandler: null | MessageHandler = null
   ) {
     // generate correlationid for use as Context
     const correlationid = uuidv4();
@@ -117,18 +130,27 @@ export class ApiConnection extends BrokerConnection {
     log(
       LevelString.INFO,
       `Corr id: ${correlationid}, Symbol: ${correlationSymbol.toString()}, cmdContext: ${cmdContext.getValue(
-        correlationSymbol,
-      )}`,
+        correlationSymbol
+      )}`
     );
 
     context.with(cmdContext, () => {
       // Start span
-      const span = tracer.startSpan(`RPC: ${cmd}`, { kind: SpanKind.PRODUCER }, cmdContext);
-      span.setAttributes({ 'rpc.system': 'INGESTION-AGENT', 'net.peer.name': 'localhost' });
+      const span = tracer.startSpan(
+        `RPC: ${cmd}`,
+        { kind: SpanKind.PRODUCER },
+        cmdContext
+      );
+      span.setAttributes({
+        'rpc.system': 'INGESTION-AGENT',
+        'net.peer.name': 'localhost',
+      });
       log(LevelString.INFO, `Starting RPC span`, span);
       const resultkey = this.resultKey(correlationid);
       const now = new Date();
-      params.context = { traceparent: constructTraceParent(span.spanContext()) };
+      params.context = {
+        traceparent: constructTraceParent(span.spanContext()),
+      };
       // create msg
       const msg = {
         agentId: agentid,
@@ -142,22 +164,41 @@ export class ApiConnection extends BrokerConnection {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       this.client.subscribe(resultkey, { qos: 0 }, (err, _granted) => {
         if (err)
-          log(LevelString.ERROR, `Error subscribing to result topic for id ${correlationid}`, err);
+          log(
+            LevelString.ERROR,
+            `Error subscribing to result topic for id ${correlationid}`,
+            err
+          );
         else if (!(correlationid in this.awaitingResults))
-          this.awaitingResults[correlationid] = { sent: now, handler: messageHandler, span };
+          this.awaitingResults[correlationid] = {
+            sent: now,
+            handler: messageHandler,
+            span,
+          };
       });
-      this.client.publish(`chpida/ims/${agentid}/cmd`, JSON.stringify(msg), error => {
-        span.addEvent('Published command');
-        if (error) {
-          log(LevelString.ERROR, `Failed to publish command ${cmd} to agent ${agentid}`, error);
-          if (span) {
-            log(LevelString.ERROR, `Error publishing cmd, closing RPC span`);
-            span.end();
-          } else {
-            log(LevelString.ERROR, `Cannot see span from inside publish, need to modify code`);
+      this.client.publish(
+        `chpida/ims/${agentid}/cmd`,
+        JSON.stringify(msg),
+        (error) => {
+          span.addEvent('Published command');
+          if (error) {
+            log(
+              LevelString.ERROR,
+              `Failed to publish command ${cmd} to agent ${agentid}`,
+              error
+            );
+            if (span) {
+              log(LevelString.ERROR, `Error publishing cmd, closing RPC span`);
+              span.end();
+            } else {
+              log(
+                LevelString.ERROR,
+                `Cannot see span from inside publish, need to modify code`
+              );
+            }
           }
         }
-      });
+      );
     });
   }
 
@@ -176,7 +217,11 @@ export class ApiConnection extends BrokerConnection {
   //   }
   // }
   // topic is useless, it refers to the autogenerated mqtt queue name, not the routing key of the msg
-  onMessage: MessageHandler = (_topic: string, payload: Buffer, _packet: unknown) => {
+  onMessage: MessageHandler = (
+    _topic: string,
+    payload: Buffer,
+    _packet: unknown
+  ) => {
     log(LevelString.INFO, `${payload.toString()}`, 'Message received');
     const prepped = payload.toString().replaceAll("'", '"');
     const msg: {
@@ -203,19 +248,25 @@ export class ApiConnection extends BrokerConnection {
 
       // remove correlation id from list of awaiting results
       delete this.awaitingResults[msg.correlationid];
-      this.client.unsubscribe(this.resultKey(msg.correlationid), undefined, err => {
-        if (err)
-          log(
-            LevelString.ERROR,
-            `Error unsubscribing from result topic ${this.resultKey(msg.correlationid || '')}`,
-            err,
-          );
-        else
-          log(
-            LevelString.INFO,
-            `Removed correlation id from awaitingResults: ${msg.correlationid}`,
-          );
-      });
+      this.client.unsubscribe(
+        this.resultKey(msg.correlationid),
+        undefined,
+        (err) => {
+          if (err)
+            log(
+              LevelString.ERROR,
+              `Error unsubscribing from result topic ${this.resultKey(
+                msg.correlationid || ''
+              )}`,
+              err
+            );
+          else
+            log(
+              LevelString.INFO,
+              `Removed correlation id from awaitingResults: ${msg.correlationid}`
+            );
+        }
+      );
     }
     // if msg is status
     if (msg.connectionstate) {

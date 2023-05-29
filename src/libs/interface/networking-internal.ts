@@ -1,13 +1,15 @@
 import { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 import jwt_decode from 'jwt-decode';
 
-import { LevelString, log } from 'helpers/logger';
+import { LevelString, log } from '../../helpers/logger';
 
 import { HttpRequest, NetworkRequest, RequestError, TokenData } from './data';
 
 // WARNING: NOT INTENDED FOR USE BY EXTERNAL APPLICATIONS
 
-export function returnTokenIfValid(response: AxiosResponse): TokenData | RequestError {
+export function returnTokenIfValid(
+  response: AxiosResponse
+): TokenData | RequestError {
   log(LevelString.INFO, 'token response:', response);
   if (
     'access_token' in response &&
@@ -51,7 +53,7 @@ export function returnAuthError(error: AxiosError) {
 
 export function encodeQueryParams(params: Record<string, string>): string {
   const encoded: string[] = [];
-  Object.keys(params).forEach(property => {
+  Object.keys(params).forEach((property) => {
     const encodedKey = encodeURIComponent(property);
     const encodedValue = encodeURIComponent(params[property]);
     encoded.push(`${encodedKey}=${encodedValue}`);
@@ -73,21 +75,26 @@ export function getRequest(api: AxiosInstance) {
 
       // TODO?: remove/replace toString() by changing handling of request body, type
       if (request.body != null)
-        return api[request.method](request.url, request.body.toString(), config);
+        return api[request.method](
+          request.url,
+          request.body.toString(),
+          config
+        );
       return api[request.method](request.url, '', config);
     }
 
     // NOTE: NoAuth is intended for use by login functionality. will not function for most endpoints
     // TODO: limit request body to known data structures?
     log(LevelString.INFO, 'NoAuth', request);
-    if (request.body) return api[request.method](request.url, request.body.toString());
+    if (request.body)
+      return api[request.method](request.url, request.body.toString());
     return api[request.method](request.url);
   };
 } // Return a function that executes a network request with CHP-IDA headers and current auth data
 
 export function refreshToken(
   api: AxiosInstance,
-  credentials: TokenData,
+  credentials: TokenData
 ): Promise<TokenData | RequestError> {
   const params: Record<string, string> = {
     client_id: 'chpida_api', // base on parameter?
@@ -105,14 +112,14 @@ export function refreshToken(
   return retryOnFailure(api, request, 3, getRequest, credentials, false)
     .then(returnTokenIfValid, returnAuthError)
     .then(
-      result => {
+      (result) => {
         log(LevelString.INFO, 'refresh', result);
         return result;
       },
-      error => {
+      (error) => {
         log(LevelString.ERROR, 'refresh error', error);
         return error;
-      },
+      }
     );
 }
 
@@ -121,15 +128,20 @@ export function retryOnFailure(
   api: AxiosInstance,
   request: NetworkRequest,
   attempts: number,
-  func: (api: AxiosInstance) => (req: NetworkRequest, creds?: TokenData) => Promise<AxiosResponse>,
+  func: (
+    api: AxiosInstance
+  ) => (req: NetworkRequest, creds?: TokenData) => Promise<AxiosResponse>,
   additionalArg: TokenData | null = null,
   refreshtoken = true,
   logFailures = false,
   onSuccess?: (response: AxiosResponse) => void,
   onFailure?: (error: AxiosError) => void,
-  _finally?: () => void,
+  _finally?: () => void
 ): Promise<AxiosResponse> {
-  const req = additionalArg != null ? func(api)(request, additionalArg) : func(api)(request);
+  const req =
+    additionalArg != null
+      ? func(api)(request, additionalArg)
+      : func(api)(request);
 
   const shouldRefresh = () => {
     if (additionalArg == null || !refreshtoken) return false;
@@ -166,8 +178,10 @@ export function retryOnFailure(
         log(LevelString.INFO, 'Refreshing token');
         return refreshToken(api, additionalArg).then(
           // token refresh should not count as a failure
-          newTokens => {
-            if (Object.values(RequestError).includes(newTokens as RequestError)) {
+          (newTokens) => {
+            if (
+              Object.values(RequestError).includes(newTokens as RequestError)
+            ) {
               return retryOnFailure(
                 api,
                 request,
@@ -178,7 +192,7 @@ export function retryOnFailure(
                 logFailures,
                 onSuccess,
                 onFailure,
-                _finally,
+                _finally
               );
             }
             return retryOnFailure(
@@ -191,13 +205,17 @@ export function retryOnFailure(
               logFailures,
               onSuccess,
               onFailure,
-              _finally,
+              _finally
             );
           },
-          refreshError => {
-            log(LevelString.ERROR, 'Error automatically refreshing token in retry', refreshError);
+          (refreshError) => {
+            log(
+              LevelString.ERROR,
+              'Error automatically refreshing token in retry',
+              refreshError
+            );
             return Promise.reject(RequestError.Unknown);
-          },
+          }
         );
       }
       // recursively call function, decrementing attempts
@@ -211,7 +229,7 @@ export function retryOnFailure(
         logFailures,
         onSuccess,
         onFailure,
-        _finally,
+        _finally
       );
     });
 } // - Automatically retry request up to n times

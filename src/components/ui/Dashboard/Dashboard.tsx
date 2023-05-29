@@ -3,8 +3,13 @@ import { intersection, isEmpty } from 'lodash';
 import { useEffect, useMemo, useState } from 'react';
 import { Layout, Layouts, Responsive, WidthProvider } from 'react-grid-layout';
 
-import { ComponentById, DashboardControlOverlay } from 'components/ui';
-import { getStorage, parseStorage, setStorageObject, setStorageString } from 'helpers/storage';
+import { ComponentById, DashboardControlOverlay } from '../../../components/ui';
+import {
+  getStorage,
+  parseStorage,
+  setStorageObject,
+  setStorageString,
+} from '../../../helpers/storage';
 
 import { StyledPaper } from './Dashboard.styles';
 import {
@@ -26,18 +31,26 @@ const Dashboard = ({
   type,
 }: IResponsiveGridLayout) => {
   const ResponsiveGridLayout = WidthProvider(Responsive);
-  const [currentLayouts, setCurrentLayouts] = useState<Layouts | undefined>(layouts);
+  const [currentLayouts, setCurrentLayouts] = useState<Layouts | undefined>(
+    layouts
+  );
   const [canEdit, setCanEdit] = useState<boolean>(false);
   const [hasRole, setHasRole] = useState<boolean>(false);
   const editMode = useMemo(() => hasRole && editable, [hasRole, editable]);
-  const unLocked = useMemo(() => hasRole && editable && canEdit, [hasRole, editable, canEdit]);
+  const unLocked = useMemo(
+    () => hasRole && editable && canEdit,
+    [hasRole, editable, canEdit]
+  );
   const orginalLayout = layouts;
 
   // TODO: Value to come from state
   const currentRole = parseStorage('Role').split(',');
   const currentStorage = useMemo(() => {
     if (!getStorage('Dashboard')) {
-      setStorageString('Dashboard', JSON.stringify({ [`${type}`]: currentLayouts }));
+      setStorageString(
+        'Dashboard',
+        JSON.stringify({ [`${type}`]: currentLayouts })
+      );
     }
     return parseStorage('Dashboard') || '';
   }, [currentLayouts, type]);
@@ -69,7 +82,7 @@ const Dashboard = ({
         useCSSTransforms={true}
       >
         {components &&
-          components.map(item => (
+          components.map((item) => (
             <StyledPaper key={item.id} elevation={2} square>
               <ComponentById components={components} selected={item.id} />
             </StyledPaper>

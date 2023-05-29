@@ -1,7 +1,7 @@
 import { createSlice, current } from '@reduxjs/toolkit';
 
-import { formatConnectedDevices } from 'helpers/devices';
 import { GenericRecord } from 'types/generic.types';
+import { formatConnectedDevices } from '../../../helpers/devices';
 
 const initialState: GenericRecord = {};
 

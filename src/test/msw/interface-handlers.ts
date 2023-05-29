@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { rest } from 'msw';
 
-import { LevelString, log } from 'helpers/logger';
+import { LevelString, log } from '../../helpers/logger';
 
 import { TokenData } from 'libs/interface/data';
 

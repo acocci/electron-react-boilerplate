@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { IDeviceSlice } from 'helpers/devices';
+import { IDeviceSlice } from '../../../helpers/devices';
 
 const initialState: IDeviceSlice = {
   availableDevices: {},

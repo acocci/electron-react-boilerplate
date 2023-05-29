@@ -3,7 +3,6 @@ import { useContext } from 'react';
 
 import { ConnectButton } from 'components/ui';
 import { ConnectionContext } from 'context/ConnectionContext';
-import { LevelString, log } from 'helpers/logger';
 import { AgentCMD } from 'libs/interface/api/connection';
 import { handleAvailableDevices } from 'libs/interface/api/message-handlers';
 import {
@@ -14,6 +13,7 @@ import {
 import { TokenData } from 'libs/interface/data';
 import { refreshToken } from 'libs/interface/networking-internal';
 import TitleTypography from 'libs/ui/components/TitleTypography';
+import { LevelString, log } from '../helpers/logger';
 
 import { api } from '../libs/interface/networking';
 

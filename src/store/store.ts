@@ -4,17 +4,19 @@ import { createBrowserHistory } from 'history';
 import { createReduxHistoryContext } from 'redux-first-history';
 import logger from 'redux-logger';
 
-import { authApi } from 'components/ui/login/AuthApi';
+import { authApi } from '../components/ui/login/AuthApi';
 
 import loginReducer from '../components/ui/login/Login-slice';
 import catalogReducer from '../libs/interface/api/catalog-slice';
 import deviceReducer from '../libs/interface/api/device-slice';
 import messageReducer from '../libs/interface/api/message-slice';
 
+const isDev = window?.electron?.Env ? window.electron.Env.isDev() : false;
+
 const { createReduxHistory, routerMiddleware, routerReducer } =
   createReduxHistoryContext({
     history: createBrowserHistory(),
-    reduxTravelling: window.electron.Env.isDev(),
+    reduxTravelling: isDev,
     savePreviousLocations: 1,
   });
 
@@ -22,7 +24,7 @@ const makeStore = () => {
   const sagaMiddleware = createSagaMiddleware();
 
   const store = configureStore({
-    devTools: window.electron.Env.isDev(),
+    devTools: isDev,
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({ thunk: true })
         .concat(sagaMiddleware)

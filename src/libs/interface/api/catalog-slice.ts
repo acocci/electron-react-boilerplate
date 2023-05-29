@@ -2,8 +2,8 @@
 import { createSlice, current } from '@reduxjs/toolkit';
 import { omit } from 'lodash';
 
-import { formatCatalog } from 'helpers/catalog';
 import { GenericRecord } from 'types/generic.types';
+import { formatCatalog } from '../../../helpers/catalog';
 
 const initialState: GenericRecord = {};
 

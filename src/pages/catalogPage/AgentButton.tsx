@@ -6,10 +6,10 @@ import { formatISO } from 'date-fns';
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { diffInSeconds, formatUTCDateWithSeconds } from 'helpers/dates';
-import { getStorage, setStorageString } from 'helpers/storage';
-import { removeCatalogMessage } from 'libs/interface/api/catalog-slice';
-import { store } from 'store/store';
+import { diffInSeconds, formatUTCDateWithSeconds } from '../../helpers/dates';
+import { getStorage, setStorageString } from '../../helpers/storage';
+import { removeCatalogMessage } from '../../libs/interface/api/catalog-slice';
+import { store } from '../../store/store';
 
 import { AlertContent } from './catalogPage.styles';
 
@@ -84,7 +84,8 @@ const AgentButton = ({
           {t('devices.agentId')}: {agentId}
         </Box>
         <Box>
-          {t('devices.lastMsgRecieved')}: {formatUTCDateWithSeconds(timestamp, true)}
+          {t('devices.lastMsgRecieved')}:{' '}
+          {formatUTCDateWithSeconds(timestamp, true)}
         </Box>
       </AlertDisplay>
     </AlertContent>

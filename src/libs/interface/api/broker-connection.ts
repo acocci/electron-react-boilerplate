@@ -1,6 +1,6 @@
 import mqtt from 'mqtt/dist/mqtt';
 
-import { LevelString, log } from 'helpers/logger';
+import { LevelString, log } from '../../../helpers/logger';
 
 import { defaultCredentials } from '../authentication';
 
@@ -22,7 +22,7 @@ export function connectionInfo(
   credentials = defaultCredentials.rmq,
   host = '127.0.0.1',
   port = 15675, // 15675 is default websocket plugin for mqtt // 1883,
-  vhost = '/',
+  vhost = '/'
   // query: string, // TODO: what do we need the query parameters for, if anything?
 ): BrokerConnectionInfo {
   return {
@@ -61,16 +61,19 @@ export class BrokerConnection {
     });
   }
 
-  setHandlers(messageHandler: (topic: string, payload: Buffer, packet: unknown) => void) {
+  setHandlers(
+    messageHandler: (topic: string, payload: Buffer, packet: unknown) => void
+  ) {
     // connection
     this.client.on('connect', () => {
       log(LevelString.INFO, 'mqtt connected');
 
-      this.client.subscribe(this.topic, err => {
+      this.client.subscribe(this.topic, (err) => {
         if (!err) {
           log(LevelString.INFO, 'subscription successful');
           // this.testPublish();
-        } else log(LevelString.ERROR, 'Error subscribing to topic via mqtt', err);
+        } else
+          log(LevelString.ERROR, 'Error subscribing to topic via mqtt', err);
       });
     });
 

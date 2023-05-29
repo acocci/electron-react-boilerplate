@@ -1,7 +1,7 @@
 import Grid from '@mui/material/Unstable_Grid2';
 import { styled } from '@mui/system';
 
-import theme, { sansSerifFontFamily } from 'theme';
+import theme, { sansSerifFontFamily } from '../../../theme';
 
 export const PanelHeader = styled(Grid)({
   '& .MuiButtonBase-root': {

@@ -1,15 +1,14 @@
 import { Route, Routes } from 'react-router-dom';
 
-import Layout from 'components/Layout';
-import ActiveDevicePage from 'pages/ActiveDevicesPage';
-import CatalogPage from 'pages/catalogPage/CatalogPage';
+import Layout from '../components/Layout';
+import ActiveDevicePage from '../pages/ActiveDevicesPage';
+import CatalogPage from '../pages/catalogPage/CatalogPage';
 // import DevicePage from 'pages/DevicePage';
 
 // // NOTE: TokenPage is for testing purposes
 // import TokenPage from 'pages/TokenPage';
 
 function AppRoutes() {
-  console.log(Route);
   return (
     <Routes>
       <Route element={<Layout />}>

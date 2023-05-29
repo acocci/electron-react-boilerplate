@@ -5,19 +5,25 @@ import Grid from '@mui/material/Unstable_Grid2';
 import { escapeRegExp } from 'lodash';
 import { useTranslation } from 'react-i18next';
 
-import { ConnectButton } from 'components/ui';
-import { formatUTCDateWithSeconds } from 'helpers/dates';
-import { deviceWhiteListRegEx } from 'helpers/devices';
+import { ConnectButton } from '../../components/ui';
+import { formatUTCDateWithSeconds } from '../../helpers/dates';
+import { deviceWhiteListRegEx } from '../../helpers/devices';
 
 import { StyledSelectedListBox } from './catalogPage.styles';
 
-export const AvailableDeviceList = ({ data, agent }: { data: any; agent: string }) => {
+export const AvailableDeviceList = ({
+  data,
+  agent,
+}: {
+  data: any;
+  agent: string;
+}) => {
   const { t } = useTranslation();
   const { availableCharacteristics, deviceAddress, deviceName, RSSI } = data;
   const characteristics = availableCharacteristics.join(', ');
   const regX = new RegExp(
     deviceWhiteListRegEx.map((x: string) => escapeRegExp(String(x))).join('|'),
-    'gi',
+    'gi'
   );
   const isMatch = characteristics.match(regX);
   const newValue = 100 + Number(RSSI);
@@ -52,7 +58,11 @@ export const AvailableDeviceList = ({ data, agent }: { data: any; agent: string 
         </Box>
         {isMatch && (
           <Box mb={2}>
-            <ConnectButton address={deviceAddress} agent={agent} name={deviceName} />
+            <ConnectButton
+              address={deviceAddress}
+              agent={agent}
+              name={deviceName}
+            />
           </Box>
         )}
       </Grid>
@@ -60,7 +70,13 @@ export const AvailableDeviceList = ({ data, agent }: { data: any; agent: string 
   );
 };
 
-export const SelectedDeviceList = ({ data, agent }: { data: any; agent: string }) => {
+export const SelectedDeviceList = ({
+  data,
+  agent,
+}: {
+  data: any;
+  agent: string;
+}) => {
   const { t } = useTranslation();
   const { deviceAddress, device_name, stats } = data;
   const { sent_msg, recv_msg, last_sent_ts, last_recv_ts } = stats;

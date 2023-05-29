@@ -2,18 +2,18 @@ import { Box, Button, TextField } from '@mui/material';
 import jwtDecode from 'jwt-decode';
 import { useState } from 'react';
 
-import { LevelString, log } from 'helpers/logger';
-import { login, logout } from 'libs/interface/authentication';
-import { Credentials, TokenData } from 'libs/interface/data';
-import { api } from 'libs/interface/networking';
-import { refreshToken } from 'libs/interface/networking-internal';
-import { useAppDispatch, useAppSelector } from 'store/hooks';
+import { LevelString, log } from '../../../helpers/logger';
+import { login, logout } from '../../../libs/interface/authentication';
+import { Credentials, TokenData } from '../../../libs/interface/data';
+import { api } from '../../../libs/interface/networking';
+import { refreshToken } from '../../../libs/interface/networking-internal';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
 import { setToken, setUserInfo } from './Login-slice';
 // added changes
 const Login = () => {
-  const { firstName, lastName, roles } = useAppSelector(state => state.user);
-  const token = useAppSelector(state => state.user.token);
+  const { firstName, lastName, roles } = useAppSelector((state) => state.user);
+  const token = useAppSelector((state) => state.user.token);
   const dispatch = useAppDispatch();
   let tokenData: TokenData | null = null;
   const [userCredentials, setUserCredentials] = useState<Credentials>({
@@ -22,7 +22,7 @@ const Login = () => {
   });
 
   function loginUser() {
-    login(userCredentials).then(data => {
+    login(userCredentials).then((data) => {
       if (!(typeof data === 'string')) {
         tokenData = data;
         const decoded: {
@@ -35,7 +35,11 @@ const Login = () => {
         log(LevelString.INFO, 'decoded', decoded);
 
         dispatch(
-          setUserInfo({ firstName: given_name, lastName: family_name, roles: realm_access.roles }),
+          setUserInfo({
+            firstName: given_name,
+            lastName: family_name,
+            roles: realm_access.roles,
+          })
         );
 
         dispatch(setToken(tokenData));
@@ -45,13 +49,15 @@ const Login = () => {
 
   const btnLogout = () => {
     if (token != null) {
-      logout(token).then(success => log(LevelString.INFO, 'Logout successful', success));
+      logout(token).then((success) =>
+        log(LevelString.INFO, 'Logout successful', success)
+      );
     }
   };
 
   const btnRefresh = () => {
     if (token != null)
-      refreshToken(api, token).then(data => {
+      refreshToken(api, token).then((data) => {
         if (!(typeof data === 'string')) dispatch(setToken(data));
       });
   };
@@ -67,14 +73,24 @@ const Login = () => {
           }}
         >
           <TextField
-            onChange={e => setUserCredentials({ ...userCredentials, username: e.target.value })}
+            onChange={(e) =>
+              setUserCredentials({
+                ...userCredentials,
+                username: e.target.value,
+              })
+            }
             required
             id="outlined-required"
             label="Username"
             size="small"
           />
           <TextField
-            onChange={e => setUserCredentials({ ...userCredentials, password: e.target.value })}
+            onChange={(e) =>
+              setUserCredentials({
+                ...userCredentials,
+                password: e.target.value,
+              })
+            }
             id="outlined-password-input"
             label="Password"
             type="password"

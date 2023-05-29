@@ -7,14 +7,17 @@ import { useSnackbar } from 'notistack';
 import { useContext, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Severity, snackBarDefaults } from 'components/ui/SnackbarDisplay/SnackbarDisplay.types';
-import { ConnectionContext } from 'context/ConnectionContext';
-import { diffInSeconds, formatUTCDateWithSeconds } from 'helpers/dates';
-import { ConnectState, IStatusMessage } from 'helpers/devices';
-import { LevelString, log } from 'helpers/logger';
-import { AgentCMD } from 'libs/interface/api/connection';
-import TitleTypography from 'libs/ui/components/TitleTypography';
-import { useAppSelector } from 'store/hooks';
+import {
+  Severity,
+  snackBarDefaults,
+} from '../components/ui/SnackbarDisplay/SnackbarDisplay.types';
+import { ConnectionContext } from '../context/ConnectionContext';
+import { diffInSeconds, formatUTCDateWithSeconds } from '../helpers/dates';
+import { ConnectState, IStatusMessage } from '../helpers/devices';
+import { LevelString, log } from '../helpers/logger';
+import { AgentCMD } from '../libs/interface/api/connection';
+import TitleTypography from '../libs/ui/components/TitleTypography';
+import { useAppSelector } from '../store/hooks';
 
 interface IActiveDevice {
   agent: string;
@@ -43,7 +46,7 @@ const Device = ({ agent, device, deviceId, deviceObj }: IActiveDevice) => {
 
   const disconnected = useMemo(
     () => connectionstate === ConnectState.Disconnected,
-    [connectionstate],
+    [connectionstate]
   );
 
   const diff = useMemo(() => {
@@ -87,13 +90,19 @@ const Device = ({ agent, device, deviceId, deviceObj }: IActiveDevice) => {
       } else {
         if (diff >= 0 && diff < range.info) {
           setSeverityLevel('info');
-          setDisconnectedMsg(`${t('devices.disconnectedMsg', { seconds: range.default })}`);
+          setDisconnectedMsg(
+            `${t('devices.disconnectedMsg', { seconds: range.default })}`
+          );
         } else if (diff >= range.info && diff < range.warning) {
           setSeverityLevel('warning');
-          setDisconnectedMsg(`${t('devices.disconnectedMsg', { seconds: range.info })}`);
+          setDisconnectedMsg(
+            `${t('devices.disconnectedMsg', { seconds: range.info })}`
+          );
         } else if (diff >= range.warning) {
           setSeverityLevel('error');
-          setDisconnectedMsg(`${t('devices.disconnectedMsg', { seconds: range.warning })}`);
+          setDisconnectedMsg(
+            `${t('devices.disconnectedMsg', { seconds: range.warning })}`
+          );
         }
         log(LevelString.INFO, `not connectedtest ${device_name}: ${diff}`);
       }
@@ -111,23 +120,28 @@ const Device = ({ agent, device, deviceId, deviceObj }: IActiveDevice) => {
         >
           <Box my={2}>
             <Typography variant="body2">
-              <strong>{t('devices.connectedState')}:</strong> {connectionstate} {disconnectedMsg}
+              <strong>{t('devices.connectedState')}:</strong> {connectionstate}{' '}
+              {disconnectedMsg}
             </Typography>
             <Typography variant="body2">
-              <strong>{t('devices.error')}:</strong> {error || t('devices.none')}
+              <strong>{t('devices.error')}:</strong>{' '}
+              {error || t('devices.none')}
             </Typography>
             <Typography variant="body2">
               <strong>{t('devices.lastRecieved')}:</strong>{' '}
               {formatUTCDateWithSeconds(lastcmdmsgrcv, true)}
             </Typography>
             <Typography variant="body2">
-              <strong>{t('devices.status')}:</strong> {status || t('devices.na')}
+              <strong>{t('devices.status')}:</strong>{' '}
+              {status || t('devices.na')}
             </Typography>
             <Typography variant="body2">
-              <strong>{t('devices.messagesReceived')}:</strong> {recv_msgs || t('devices.na')}
+              <strong>{t('devices.messagesReceived')}:</strong>{' '}
+              {recv_msgs || t('devices.na')}
             </Typography>
             <Typography variant="body2">
-              <strong>{t('devices.messagesSent')}:</strong> {sent_msgs || t('devices.na')}
+              <strong>{t('devices.messagesSent')}:</strong>{' '}
+              {sent_msgs || t('devices.na')}
             </Typography>
             <Box textAlign={'right'}>
               <Button
@@ -161,7 +175,7 @@ const ActiveDevices = () => {
     const deviceArray = statusMessages ? Object.entries(statusMessages) : [];
     const list: any[] = [];
     if (deviceArray && deviceArray.length > 0) {
-      deviceArray.map(device => list.push({ [`${device[0]}`]: device[1] }));
+      deviceArray.map((device) => list.push({ [`${device[0]}`]: device[1] }));
     }
     return list;
   }, [statusMessages]);
@@ -171,11 +185,16 @@ const ActiveDevices = () => {
     const dList: any[] = [];
     if (agentArray && agentArray.length > 0) {
       const list: any[] = [];
-      agentArray.map(agent => list.push(get(agent, '[1].selected_device_list')));
+      agentArray.map((agent) =>
+        list.push(get(agent, '[1].selected_device_list'))
+      );
       if (list && list.length > 0) {
         list[0].forEach((device: { deviceAddress: string; stats: any }) => {
           dList.push({
-            [`${device.deviceAddress}`]: { ...device.stats, agent: Object.keys(catalogMessage)[0] },
+            [`${device.deviceAddress}`]: {
+              ...device.stats,
+              agent: Object.keys(catalogMessage)[0],
+            },
           });
         });
       }
@@ -189,7 +208,7 @@ const ActiveDevices = () => {
       <Grid container spacing={2} alignItems="stretch">
         <>
           {agentList &&
-            deviceList.map(device => {
+            deviceList.map((device) => {
               const deviceId = Object.keys(device)[0];
 
               // device not found in agentList

@@ -1,5 +1,5 @@
 /* eslint-disable jest/no-commented-out-tests */
-import { LevelString, log } from 'helpers/logger';
+import { LevelString, log } from '../../../helpers/logger';
 
 import { defaultCredentials, login } from '../authentication';
 import { RequestError, TokenData } from '../data';

@@ -1,4 +1,5 @@
 import { createRoot } from 'react-dom/client';
+import { HashRouter } from 'react-router-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
@@ -9,7 +10,11 @@ if (window.electron.Env.isDev() && window.electron.Env.isMswEnabled()) {
   const { worker } = require('../test/msw/browser');
   worker.start();
 }
-root.render(<App />);
+root.render(
+  <HashRouter>
+    <App />
+  </HashRouter>
+);
 
 // calling IPC exposed from preload script
 window.electron.ipcRenderer.once('ipc-example', (arg) => {

@@ -1,4 +1,8 @@
-import { ListMenu, MenuTypes, StatusCircle } from '@CanineLizard/react-component-lib';
+import {
+  ListMenu,
+  MenuTypes,
+  StatusCircle,
+} from '@CanineLizard/react-component-lib';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import CloseIcon from '@mui/icons-material/Close';
@@ -8,12 +12,23 @@ import Grid from '@mui/material/Unstable_Grid2';
 import { truncate } from 'lodash';
 import { useState } from 'react';
 
-import { defaultIndicatorProps, IPanelProps, PanelIndicator } from 'components/ui';
-import theme from 'theme';
+import {
+  defaultIndicatorProps,
+  IPanelProps,
+  PanelIndicator,
+} from '../../../components/ui';
+import theme from '../../../theme';
 
 import { PanelHeader } from './Panel.styles';
 
-const Panel = ({ actionBtn, children, indicator, menuItems, handleClose, title }: IPanelProps) => {
+const Panel = ({
+  actionBtn,
+  children,
+  indicator,
+  menuItems,
+  handleClose,
+  title,
+}: IPanelProps) => {
   const { easeIn, easeOut } = theme.transitions.easing;
   const [open, setOpen] = useState<boolean>(true);
   const { indicatorFill, indicatorDisabled, indicatorDisplay }: PanelIndicator =
@@ -35,8 +50,13 @@ const Panel = ({ actionBtn, children, indicator, menuItems, handleClose, title }
           <Tooltip title={title.length > truncateTitle ? title : ''}>
             <>
               {indicatorDisplay && (
-                <Box sx={{ display: 'block', float: 'left', lineHeight: '14px' }}>
-                  <StatusCircle color={indicatorFill} disabled={indicatorDisabled} />
+                <Box
+                  sx={{ display: 'block', float: 'left', lineHeight: '14px' }}
+                >
+                  <StatusCircle
+                    color={indicatorFill}
+                    disabled={indicatorDisabled}
+                  />
                 </Box>
               )}
               <Typography variant="h2">{displayTitle}</Typography>
@@ -51,7 +71,9 @@ const Panel = ({ actionBtn, children, indicator, menuItems, handleClose, title }
           {menuItems && (
             <IconButton>
               <ListMenu
-                menuItems={[{ ico: <MoreHorizIcon />, name: '', secondary: menuItems }]}
+                menuItems={[
+                  { ico: <MoreHorizIcon />, name: '', secondary: menuItems },
+                ]}
                 menuType={MenuTypes.anchorMenu}
               />
             </IconButton>

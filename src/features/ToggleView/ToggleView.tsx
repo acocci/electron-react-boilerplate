@@ -6,11 +6,15 @@ import { escapeRegExp } from 'lodash';
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Dashboard } from 'components/ui';
-import { isDashboard, isList } from 'helpers/toggleView';
-import { LabelValuePairs, ReactEvent } from 'types/generic.types';
+import { Dashboard } from '../../components/ui';
+import { isDashboard, isList } from '../../helpers/toggleView';
+import { LabelValuePairs, ReactEvent } from '../../types/generic.types';
 
-import { defaultDisplayType, DisplayOptions, IToggleView } from './ToggleView.types';
+import {
+  defaultDisplayType,
+  DisplayOptions,
+  IToggleView,
+} from './ToggleView.types';
 
 const ToggleView = ({
   autoCompleteProps,
@@ -20,7 +24,9 @@ const ToggleView = ({
   tableProps,
 }: IToggleView) => {
   const { t } = useTranslation();
-  const [display, setDisplay] = useState<string>(displayType || defaultDisplayType);
+  const [display, setDisplay] = useState<string>(
+    displayType || defaultDisplayType
+  );
   const [rows, setRows] = useState(tableProps.rows);
   const [components, setComponents] = useState(dashboardProps.components);
 
@@ -37,7 +43,7 @@ const ToggleView = ({
       const newValue = value;
       const regX = new RegExp(
         newValue.map((x: { value: string }) => escapeRegExp(x.value)).join('|'),
-        'gi',
+        'gi'
       );
 
       if (onFilter) onFilter(regX);
@@ -45,9 +51,13 @@ const ToggleView = ({
       setComponents(
         dashboardProps.components
           .map((component: any) => component.id.match(regX) && component)
-          .filter(Boolean),
+          .filter(Boolean)
       );
-      setRows(tableProps.rows.map((row: any) => row.id.match(regX) && row).filter(Boolean));
+      setRows(
+        tableProps.rows
+          .map((row: any) => row.id.match(regX) && row)
+          .filter(Boolean)
+      );
     } else {
       setComponents(dashboardProps.components);
       setRows(tableProps.rows);
@@ -84,8 +94,12 @@ const ToggleView = ({
         )}
       </Grid>
 
-      {isList(display) && tableProps && <SortTable columns={tableProps.columns} rows={rows} />}
-      {isDashboard(display) && <Dashboard {...dashboardProps} components={components} />}
+      {isList(display) && tableProps && (
+        <SortTable columns={tableProps.columns} rows={rows} />
+      )}
+      {isDashboard(display) && (
+        <Dashboard {...dashboardProps} components={components} />
+      )}
     </>
   );
 };

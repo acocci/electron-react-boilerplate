@@ -1,7 +1,6 @@
 import { Box } from '@mui/material';
 import { styled } from '@mui/system';
-
-import { sansSerifFontFamily } from 'theme';
+import { sansSerifFontFamily } from '../../theme';
 
 export const AlertContent = styled(Box)(() => ({
   cursor: 'pointer',

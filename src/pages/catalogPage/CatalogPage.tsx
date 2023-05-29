@@ -7,8 +7,8 @@ import { get } from 'lodash';
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import TitleTypography from 'libs/ui/components/TitleTypography';
-import { useAppSelector } from 'store/hooks';
+import TitleTypography from '../../libs/ui/components/TitleTypography';
+import { useAppSelector } from '../../store/hooks';
 
 import AgentButton from './AgentButton';
 import { StyledBox } from './catalogPage.styles';
@@ -19,7 +19,10 @@ const CatalogPage = () => {
   const appState = useAppSelector((state: any) => state);
   const catalogMessage = get(appState, 'catalog.catalogMessage');
   const [selectedAgent, setSelectedAgent] = useState<string>('');
-  const [agentTimeOrig, setAgentTimeOrig] = useState<Record<string, unknown> | null>(null);
+  const [agentTimeOrig, setAgentTimeOrig] = useState<Record<
+    string,
+    unknown
+  > | null>(null);
 
   // set & store original agent timestamps
   useEffect(() => {
@@ -27,7 +30,9 @@ const CatalogPage = () => {
       const list: any[] = [];
       const agentArray = catalogMessage ? Object.entries(catalogMessage) : [];
       if (agentArray && agentArray.length > 0) {
-        agentArray.map(agent => list.push({ [`${agent[0]}`]: get(agent, '[1].timestamp') }));
+        agentArray.map((agent) =>
+          list.push({ [`${agent[0]}`]: get(agent, '[1].timestamp') })
+        );
         const agentTime = Object.assign({}, ...list);
         setAgentTimeOrig(agentTime);
       }
@@ -40,7 +45,7 @@ const CatalogPage = () => {
     const list: any[] = [];
 
     if (agentArray && agentArray.length > 0) {
-      agentArray.map(agent => {
+      agentArray.map((agent) => {
         // default to first found agent
         if (!selectedAgent) setSelectedAgent(agent[0]);
         return list.push({ [`${agent[0]}`]: agent[1] });
@@ -66,7 +71,14 @@ const CatalogPage = () => {
               <CircularIndicator thickness={4} size={50} />
             </Grid>
             <Grid xs>
-              <Typography sx={{ display: 'flex', fontWeight: 600, fontSize: 16, lineHeight: 3 }}>
+              <Typography
+                sx={{
+                  display: 'flex',
+                  fontWeight: 600,
+                  fontSize: 16,
+                  lineHeight: 3,
+                }}
+              >
                 {t('devices.searchForAgents')}
               </Typography>
             </Grid>
@@ -99,7 +111,8 @@ const CatalogPage = () => {
                 {selectedAgent &&
                   agentList.map((agent: any) => {
                     const agentId = Object.keys(agent).join();
-                    const { available_device_list, selected_device_list } = agent[agentId];
+                    const { available_device_list, selected_device_list } =
+                      agent[agentId];
                     if (agentId === selectedAgent) {
                       return (
                         <StyledBox key={agentId}>
@@ -108,13 +121,18 @@ const CatalogPage = () => {
                               {t('devices.listofSelected')}
                             </Typography>
 
-                            {selected_device_list.length < 1 && <>No Devices Available</>}
+                            {selected_device_list.length < 1 && (
+                              <>No Devices Available</>
+                            )}
 
                             {selected_device_list.map((device: any) => {
                               const { deviceAddress } = device;
                               return (
                                 <Box key={deviceAddress}>
-                                  <SelectedDeviceList data={device} agent={agentId} />
+                                  <SelectedDeviceList
+                                    data={device}
+                                    agent={agentId}
+                                  />
                                 </Box>
                               );
                             })}
@@ -125,13 +143,18 @@ const CatalogPage = () => {
                               {t('devices.listofAvailable')}
                             </Typography>
 
-                            {available_device_list.length < 1 && <>No Devices Available</>}
+                            {available_device_list.length < 1 && (
+                              <>No Devices Available</>
+                            )}
 
                             {available_device_list.map((device: any) => {
                               const { deviceAddress } = device;
                               return (
                                 <Box key={deviceAddress}>
-                                  <AvailableDeviceList data={device} agent={agentId} />
+                                  <AvailableDeviceList
+                                    data={device}
+                                    agent={agentId}
+                                  />
                                 </Box>
                               );
                             })}

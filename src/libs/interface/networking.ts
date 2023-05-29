@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 
-import makeApi from 'libs/core/configureAxios';
-import { NetworkRequest, TokenData } from 'libs/interface/data';
+import makeApi from '../../libs/core/configureAxios';
+import { NetworkRequest, TokenData } from '../../libs/interface/data';
 
 import { getRequest } from './networking-internal';
 
@@ -23,7 +23,7 @@ api.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 // TODO: add body to request
 export function authReq(
   request: NetworkRequest,
-  authentication: TokenData,
+  authentication: TokenData
 ): Promise<AxiosResponse> {
   return getRequest(api)(request, authentication);
 } // Return a function that executes a network request with CHP-IDA headers and current auth data

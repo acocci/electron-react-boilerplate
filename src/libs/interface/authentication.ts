@@ -1,11 +1,21 @@
 /* eslint-disable no-debugger */
 import jwtDecode from 'jwt-decode';
 
-import { LevelString, log } from 'helpers/logger';
+import { LevelString, log } from '../../helpers/logger';
 
-import { Credentials, HttpRequest, NetworkRequest, RequestError, TokenData } from './data';
+import {
+  Credentials,
+  HttpRequest,
+  NetworkRequest,
+  RequestError,
+  TokenData,
+} from './data';
 import { authReq, noAuthReq } from './networking';
-import { encodeQueryParams, returnAuthError, returnTokenIfValid } from './networking-internal';
+import {
+  encodeQueryParams,
+  returnAuthError,
+  returnTokenIfValid,
+} from './networking-internal';
 // import jwt_decode from 'jwt-decode';
 
 // Useful Documentation
@@ -42,7 +52,9 @@ function validCredentials(credentials: Credentials): boolean {
 
 // Generic Functionality END
 
-export function login(credentials: Credentials): Promise<TokenData | RequestError> {
+export function login(
+  credentials: Credentials
+): Promise<TokenData | RequestError> {
   const params: Record<string, string> = {
     client_id: 'chpida_api', // base on parameter?
     grant_type: 'password',
@@ -57,18 +69,19 @@ export function login(credentials: Credentials): Promise<TokenData | RequestErro
     url: '/login',
   };
 
-  if (!validCredentials(credentials)) return Promise.reject(RequestError.InvalidCredentials);
+  if (!validCredentials(credentials))
+    return Promise.reject(RequestError.InvalidCredentials);
   return noAuthReq(request)
     .then(returnTokenIfValid, returnAuthError)
     .then(
-      result => {
+      (result) => {
         log(LevelString.INFO, 'login', result);
         return result;
       },
-      error => {
+      (error) => {
         log(LevelString.ERROR, 'login error', error);
         return error;
-      },
+      }
     );
 }
 
@@ -85,6 +98,6 @@ export function logout(credentials: TokenData): Promise<boolean> {
 
   return authReq(request, credentials).then(
     () => true,
-    () => false,
+    () => false
   );
 }

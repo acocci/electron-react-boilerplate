@@ -2,8 +2,8 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import Box from '@mui/material/Box';
 import { Outlet } from 'react-router-dom';
 
-import Header from 'components/Header/Header';
-import { defaultHeaderMenuItems } from 'components/Header/Header.types';
+import Header from '../../../src/components/Header/Header';
+import { defaultHeaderMenuItems } from '../../../src/components/Header/Header.types';
 
 // TODO: Remove placeholder content
 function Layout() {

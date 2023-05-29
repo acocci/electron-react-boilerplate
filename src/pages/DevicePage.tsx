@@ -7,30 +7,30 @@ import { escapeRegExp } from 'lodash';
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { ConnectButton, DeviceDisplay } from 'components/ui';
-import { ComponentArray } from 'components/ui/ComponentById/ComponentById.types';
+import {
+  GenericRecord,
+  LabelValuePairs,
+  StrNumNode,
+} from 'types/generic.types';
+import { ConnectButton, DeviceDisplay } from '../components/ui';
+import { ComponentArray } from '../components/ui/ComponentById/ComponentById.types';
 import {
   DashboardType,
   Keys,
   RequiredLayout,
   allRoles,
-} from 'components/ui/Dashboard/Dashboard.types';
-import ToggleView from 'features/ToggleView/ToggleView';
+} from '../components/ui/Dashboard/Dashboard.types';
+import ToggleView from '../features/ToggleView/ToggleView';
 import {
   DeviceList,
   deviceWhiteListRegEx,
   formatLayout,
   formatRows,
   getDeviceNames,
-} from 'helpers/devices';
-import { generateLabelValuePairs } from 'helpers/options';
-import { useAvailableDevices } from 'hooks/useAvailableDevices';
-import TitleTypography from 'libs/ui/components/TitleTypography';
-import {
-  GenericRecord,
-  LabelValuePairs,
-  StrNumNode,
-} from 'types/generic.types';
+} from '../helpers/devices';
+import { generateLabelValuePairs } from '../helpers/options';
+import { useAvailableDevices } from '../hooks/useAvailableDevices';
+import TitleTypography from '../libs/ui/components/TitleTypography';
 
 function DevicePage() {
   const numCol = 2;

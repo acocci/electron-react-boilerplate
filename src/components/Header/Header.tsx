@@ -7,7 +7,7 @@ import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink as RouterLink } from 'react-router-dom';
 
-import { flags } from 'components/icons';
+import { flags } from '../icons';
 
 import { StyledAppBar } from './Header.styles';
 import { HeaderProps } from './Header.types';

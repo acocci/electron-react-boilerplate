@@ -3,8 +3,8 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import Backend from 'i18next-http-backend';
 import { initReactI18next } from 'react-i18next';
 
-import en_common from 'config/i18n/locales/en/common.json';
-import pl_common from 'config/i18n/locales/pl/common.json';
+import en_common from '../../config/i18n/locales/en/common.json';
+import pl_common from '../../config/i18n/locales/pl/common.json';
 
 i18n
   .use(Backend) // lazy loads translations from /public/locales

@@ -4,7 +4,7 @@ import Grid from '@mui/material/Unstable_Grid2';
 import { escapeRegExp } from 'lodash';
 import { useTranslation } from 'react-i18next';
 
-import { deviceWhiteListRegEx, IDevice } from 'helpers/devices';
+import { deviceWhiteListRegEx, IDevice } from '../../../helpers/devices';
 
 const DeviceDisplay = ({
   availableCharacteristics,
@@ -17,7 +17,7 @@ const DeviceDisplay = ({
   const characteristics = availableCharacteristics.join(', ');
   const regX = new RegExp(
     deviceWhiteListRegEx.map((x: string) => escapeRegExp(String(x))).join('|'),
-    'gi',
+    'gi'
   );
   const isMatch = characteristics.match(regX);
   const newValue = 100 + Number(RSSI);
